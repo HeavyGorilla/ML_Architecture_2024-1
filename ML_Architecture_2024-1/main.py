@@ -42,23 +42,24 @@ model: inverted_resnet50 + SEBlock
 batch = 256
 optimizer = optim.AdamW(model.parameters(), lr=config['lr'], weight_decay=0.01)
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=config['epochs'])
-    transform_train = transforms.Compose([
-        transforms.RandomCrop(size=32, padding=4),
-        transforms.RandomHorizontalFlip(p=0.5),
-        transforms.RandomVerticalFlip(p=0.2),
-        transforms.RandomAdjustSharpness(sharpness_factor=2, p=0.5),
-        transforms.RandomGrayscale(p=0.2),
-        transforms.RandomInvert(p=0.2),
-        transforms.RandomRotation(15),
-        transforms.RandomPerspective(p=0.2),
-        transforms.RandomEqualize(p=0.2),
-        transforms.RandomSolarize(threshold=200, p=0.2),
-        transforms.RandomAutocontrast(p=0.3),
-        transforms.RandAugment(0, 20),
-        transforms.ToTensor(),
-        transforms.RandomErasing(p=0.2),
-        transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)),
-    ])
+Augmentation: MixUp + CutMix, p=0.5 each
+transform_train = transforms.Compose([
+    transforms.RandomCrop(size=32, padding=4),
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomVerticalFlip(p=0.2),
+    transforms.RandomAdjustSharpness(sharpness_factor=2, p=0.5),
+    transforms.RandomGrayscale(p=0.2),
+    transforms.RandomInvert(p=0.2),
+    transforms.RandomRotation(15),
+    transforms.RandomPerspective(p=0.2),
+    transforms.RandomEqualize(p=0.2),
+    transforms.RandomSolarize(threshold=200, p=0.2),
+    transforms.RandomAutocontrast(p=0.3),
+    transforms.RandAugment(0, 20),
+    transforms.ToTensor(),
+    transforms.RandomErasing(p=0.2),
+    transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)),
+])
 """
 
 def topk_accuracy(output, target, topk=(1,)):
