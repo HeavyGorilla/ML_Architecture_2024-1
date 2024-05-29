@@ -1,2 +1,2 @@
-# ML_Architecture_2024-1
-Deep Learning Architecture Enhancement Approaches Experiments
+# 2024-1 자기주도연구01
+## ML Architecture Enhancement
